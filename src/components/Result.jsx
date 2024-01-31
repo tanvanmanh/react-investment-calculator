@@ -1,23 +1,27 @@
-export default function Result({result}) {
+export default function Result({header, result}) {
     return (
         <table id="result">
             <thead>
                 <tr>
-                    <th>Year</th>
-                    <th>Interest</th>
-                    <th>Balance</th>
+                    {header.map((column, index) => {
+                        return (
+                            <th key={index}>{column}</th>
+                        )
+                    })}
                 </tr>
             </thead>
             <tbody>
-                {/* {result.map((year, index) => {
+                {result.map((row, rowIndex) => {
                     return (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{year.interest}</td>
-                            <td>{year.balance}</td>
+                        <tr key={rowIndex}>
+                            <td>{row["year"]}</td>
+                            <td>{row["investmentValue"]}</td>
+                            <td>{row["interest"]}</td>
+                            <td>{row["totalInterest"]}</td>
+                            <td>{row["investedCapital"]}</td>
                         </tr>
                     )
-                })} */}
+                })}
             </tbody>
         </table>
     )   

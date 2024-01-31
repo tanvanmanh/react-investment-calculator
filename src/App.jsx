@@ -5,6 +5,14 @@ import Result from "./components/Result"
 import UserInput from "./components/UserInput";
 import {calculateInvestmentResults, formatter} from "./util/investment";
 
+const RESULT_HEADER = [
+  "Year",
+  "Investment Value",
+  "Interest (Year)",
+  "Total Interest",
+  "Invested Capital"
+];
+
 const INIT_INVESTMENT = {
   initialInvestment: 0,
   expectedReturn: 0,
@@ -22,15 +30,19 @@ function App() {
         [key]: value
       }
     });
-  }
+  }    
+  const result = calculateInvestmentResults(investment).map((row) => {
+    let rowResult = {
+      "year": row.year,
+        "investmentValue": formatter.format(row.valueEndOfYear),
+        "interest": formatter.format(row.interest),
+        "totalInterest": formatter.format(row.valueEndOfYear - (investment.initialInvestment + investment.annualInvestment * row.year)),
+        "investedCapital": formatter.format(investment.initialInvestment + investment.annualInvestment * row.year)
+    }
+    return rowResult;
+    
+  });
 
-  // const result = calculateInvestmentResults(
-  //   investment["initialInvestment"], 
-  //   investment["expectedReturn"], 
-  //   investment["annualInvestment"], 
-  //   investment["duration"]);
-
-  // console.log(result);
 
   return (<>
       <Header />
@@ -61,7 +73,7 @@ function App() {
             </span>
             
         </div>
-      <Result />
+      <Result header={RESULT_HEADER} result={result}/>
     </>
   )
 }
