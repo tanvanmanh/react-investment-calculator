@@ -27,10 +27,11 @@ function App() {
     setInvestment(prevInvestment => {
       return {
         ...prevInvestment,
-        [key]: value
+        [key]: value >= 0 ? value : 0
       }
     });
   }    
+
   const result = calculateInvestmentResults(investment).map((row) => {
     let rowResult = {
       "year": row.year,
